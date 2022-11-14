@@ -5,10 +5,9 @@ const { format } = require('url')
 const client = require('./client')(serviceName)
 
 class Jira {
-  constructor ({ baseUrl, token, email }) {
+  constructor ({ baseUrl, token }) {
     this.baseUrl = baseUrl
     this.token = token
-    this.email = email
   }
 
   async addComment (issueId, data) {
@@ -81,7 +80,7 @@ class Jira {
     }
 
     if (headers.Authorization === undefined) {
-      headers.Authorization = `Basic ${Buffer.from(`${this.email}:${this.token}`).toString('base64')}`
+      headers.Authorization = `Bearer ${Buffer.from(`${this.token}`)}`
     }
 
     // strong check for undefined
