@@ -1,5 +1,4 @@
-on:
-  push
+on: push
 
 name: Test comment
 
@@ -12,7 +11,7 @@ jobs:
       uses: actions/checkout@master
 
     - name: Login
-      uses: atlassian/gajira-login@master
+      uses: atlassian/gajira-login@v3
       env:
         JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
         JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
@@ -20,14 +19,12 @@ jobs:
 
     - name: Create new issue
       id: create
-      uses: atlassian/gajira-create@master
+      uses: atlassian/gajira-create@v3
       with:
-        project: GA
-        issuetype: Build
-        summary: |
-          Issue for comment ${{ github.repository }}
-        description: |
-          Compare branch|${{ github.event.compare }} # https://developer.github.com/v3/activity/events/types/#webhook-payload-example-31
+        project: COM
+        issuetype: Task
+        summary: Issue for comment ${{ github.repository }}
+        description: Compare branch|${{ github.event.compare }} # https://developer.github.com/v3/activity/events/types/#webhook-payload-example-31
 
     - name: Comment on issue
       uses: ./
